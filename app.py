@@ -181,7 +181,7 @@ def predict(img_path):
     table_out, 
     cv2.RETR_EXTERNAL, 
     cv2.CHAIN_APPROX_SIMPLE  # 更高效的模式[1](@ref)
-))
+)
 
         table_contours = []
         #ref: https://www.pyimagesearch.com/2015/02/09/removing-contours-image-using-python-opencv/
