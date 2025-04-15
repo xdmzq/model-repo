@@ -31,12 +31,13 @@ multidict>=6.0.4
 mypy>=1.6.0
 mypy-extensions>=1.0.0
 networkx>=3.0
-numpy>=2.0.0
+numpy==2.2.4                      # 锁定与 OpenCV 兼容的版本[7](@ref)
 oauthlib>=3.2.2
 # 替换原有 opencv-python 依赖
-opencv-python-headless>=4.7.0  # 无界面版 OpenCV[1](@ref)
-pyopengl>=3.1.6                # 纯 Python 实现的 OpenGL 支持[3,8](@ref)
-mesa>=0.7.0                    # 软件渲染的 OpenGL 库[3,8](@ref)
+opencv-python-headless==4.9.0.80  # 固定兼容性更好的版本[3,8](@ref)
+pyopengl==3.1.6                  # 强制指定已验证版本
+mesa==0.7.0                       # 软件渲染库
+pyopengl-accelerate>=3.1.6        # 增强 OpenGL 兼容性[6](@ref)
 protobuf>=4.25.1
 setuptools>=65.5.1
 torch>=2.0.0
