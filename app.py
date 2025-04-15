@@ -13,7 +13,10 @@ from albumentations.pytorch import ToTensorV2
 import pytesseract
 from io import StringIO
 
-
+# 强制禁用所有 GUI 后端
+os.environ['OPENCV_IO_ENABLE_JASPER'] = '0'
+os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0'
+cv2.setNumThreads(0)  # 禁用多线程避免冲突
 pytesseract.pytesseract.tesseract_cmd = r'D:/softwares/Tesseract/tesseract.exe'
 
 TRANSFORM = A.Compose([
@@ -174,7 +177,11 @@ def predict(img_path):
         table_out = (table_out.detach().numpy().squeeze(0).transpose(1,2,0) > 0.5).astype(np.uint8)
 
         #get contours of the mask to get number of tables
-        contours, table_heirarchy = cv2.findContours(table_out, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        contours, _ = cv2.findContours(
+    table_out, 
+    cv2.RETR_EXTERNAL, 
+    cv2.CHAIN_APPROX_SIMPLE  # 更高效的模式[1](@ref)
+))
 
         table_contours = []
         #ref: https://www.pyimagesearch.com/2015/02/09/removing-contours-image-using-python-opencv/
